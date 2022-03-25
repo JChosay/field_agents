@@ -6,6 +6,7 @@ import learn.field_agent.models.SecurityClearance;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class SecurityClearanceService {
@@ -36,16 +37,6 @@ public class SecurityClearanceService {
         return result;
     }
 
-    private Result<SecurityClearance> validate (SecurityClearance securityClearance) {
-        Result<SecurityClearance> result = new Result<>();
-
-        if (Validations.isNullOrBlank(securityClearance.getName())) {
-            result.addMessage("Security Clearance Name is Required", ResultType.INVALID);
-        }
-
-        return result;
-    }
-
     public Result<SecurityClearance> update (SecurityClearance securityClearance) {
         Result<SecurityClearance> result = validate(securityClearance);
         if (!result.isSuccess()) {
@@ -68,6 +59,24 @@ public class SecurityClearanceService {
 
     public boolean deleteById (int securityClearanceId) {
         return repository.deleteById(securityClearanceId);
+    }
+
+    private Result<SecurityClearance> validate (SecurityClearance securityClearance) {
+        Result<SecurityClearance> result = new Result<>();
+
+        if (Validations.isNullOrBlank(securityClearance.getName())) {
+            result.addMessage("Security Clearance Name is Required", ResultType.INVALID);
+        }
+
+        List<SecurityClearance> all = repository.findAll();
+        for (SecurityClearance s : all){
+            if (Objects.equals(s.getName(), securityClearance.getName())){
+                result.addMessage("You May Not Enter a Duplicate Security Clearance Name.", ResultType.INVALID);
+                return result;
+            }
+        }
+
+        return result;
     }
 
 
