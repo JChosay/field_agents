@@ -66,5 +66,9 @@ public class SecurityClearanceService {
         return result;
     }
 
+    public boolean deleteById (int securityClearanceId) {
+        return repository.deleteById(securityClearanceId);
+    }
+
 
 }
