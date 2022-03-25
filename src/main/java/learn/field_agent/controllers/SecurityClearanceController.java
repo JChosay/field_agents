@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin(origins = {"http://localhost:3000"})
 @RequestMapping("/api/security-clearance")
@@ -24,6 +26,11 @@ public class SecurityClearanceController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(securityClearance);
+    }
+
+    @GetMapping
+    public List<SecurityClearance> findAll() {
+        return service.findAll();
     }
 
 
