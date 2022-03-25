@@ -46,5 +46,25 @@ public class SecurityClearanceService {
         return result;
     }
 
+    public Result<SecurityClearance> update (SecurityClearance securityClearance) {
+        Result<SecurityClearance> result = validate(securityClearance);
+        if (!result.isSuccess()) {
+            return result;
+        }
+
+        if (securityClearance.getSecurityClearanceId() <= 0) {
+            result.addMessage("Security Clearance ID must be set for Update operation", ResultType.INVALID);
+            return result;
+        }
+
+        if (!repository.update(securityClearance)) {
+            String message = String.format("Security Clearance ID #%s Not Found",
+                    securityClearance.getSecurityClearanceId());
+            result.addMessage(message, ResultType.NOT_FOUND);
+        }
+
+        return result;
+    }
+
 
 }
