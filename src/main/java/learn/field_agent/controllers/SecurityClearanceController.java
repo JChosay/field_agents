@@ -1,5 +1,6 @@
 package learn.field_agent.controllers;
 
+import learn.field_agent.domain.Result;
 import learn.field_agent.domain.SecurityClearanceService;
 import learn.field_agent.models.SecurityClearance;
 import org.springframework.http.HttpStatus;
@@ -31,6 +32,15 @@ public class SecurityClearanceController {
     @GetMapping
     public List<SecurityClearance> findAll() {
         return service.findAll();
+    }
+
+    @PostMapping
+    public ResponseEntity<Object> add (@RequestBody SecurityClearance securityClearance) {
+        Result<SecurityClearance> result = service.add(securityClearance);
+        if (result.isSuccess()) {
+            return new ResponseEntity<>(result.getPayload(), HttpStatus.CREATED);
+        }
+        return ErrorResponse.build(result);
     }
 
 
