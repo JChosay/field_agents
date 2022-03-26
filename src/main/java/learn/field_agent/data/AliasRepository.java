@@ -10,4 +10,6 @@ public interface AliasRepository {
     boolean update(Alias alias);
 
     List<Alias> findAll();
+
+    boolean deleteById(int aliasId);
 }

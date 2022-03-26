@@ -69,5 +69,10 @@ public class AliasJdbcTemplateRepository implements AliasRepository{
 
     }
 
+    @Override
+    public boolean deleteById (int aliasId) {
+        return jdbcTemplate.update("DELETE FROM alias WHERE alias_id = ?;", aliasId) >0;
+    }
+
 
 }
