@@ -32,6 +32,20 @@ public class AliasService {
         return result;
     }
 
+    public Result<Alias> update (Alias alias) {
+        Result<Alias> result = validate(alias);
+        if (!result.isSuccess()){
+            return result;
+        }
+
+        if (!repository.update(alias)) {
+            String message = String.format("Alias ID# %s was Not Found", alias.getAliasId());
+            result.addMessage(message, ResultType.NOT_FOUND);
+        }
+
+        return result;
+    }
+
     private Result<Alias> validate (Alias alias) {
         Result<Alias> result = new Result<>();
 

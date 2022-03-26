@@ -7,5 +7,7 @@ import java.util.List;
 public interface AliasRepository {
     Alias add(Alias alias);
 
+    boolean update(Alias alias);
+
     List<Alias> findAll();
 }

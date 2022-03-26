@@ -35,4 +35,17 @@ public class AliasController {
         return ErrorResponse.build(result);
     }
 
+    @PutMapping("/{aliasId}")
+    public ResponseEntity<Object> update (@PathVariable int aliasId, @RequestBody Alias alias) {
+        if (aliasId != alias.getAliasId()) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+
+        Result<Alias> result = service.update(alias);
+        if (result.isSuccess()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return ErrorResponse.build(result);
+    }
+
 }
