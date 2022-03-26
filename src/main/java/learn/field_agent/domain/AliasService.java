@@ -56,8 +56,13 @@ public class AliasService {
         List<Alias> all = repository.findAll();
         for (Alias a : all){
             if (a.getName().equalsIgnoreCase(alias.getName())){
-                if (alias.getPersona()==null){
+                if (alias.getPersona()==null && a.getPersona()==null){
                     result.addMessage("For aliases with a duplicate name, a persona is required.", ResultType.INVALID);
+                    return result;
+                }
+                if (alias.getPersona().equalsIgnoreCase(a.getPersona())){
+                    result.addMessage("You may not enter an alias with duplicate 'name' and 'persona' fields.", ResultType.INVALID);
+                    return result;
                 }
             }
         }
