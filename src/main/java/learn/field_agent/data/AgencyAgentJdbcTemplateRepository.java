@@ -1,8 +1,11 @@
 package learn.field_agent.data;
 
+import learn.field_agent.data.mappers.AgencyAgentMapper;
 import learn.field_agent.models.AgencyAgent;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public class AgencyAgentJdbcTemplateRepository implements AgencyAgentRepository {
@@ -56,5 +59,13 @@ public class AgencyAgentJdbcTemplateRepository implements AgencyAgentRepository 
                 + "where agency_id = ? and agent_id = ?;";
 
         return jdbcTemplate.update(sql, agencyId, agentId) > 0;
+    }
+
+    @Override
+    public List<AgencyAgent> findAll() {
+
+        final String sql = "SELECT security_clearance_id FROM agency_agent;";
+        return jdbcTemplate.query(sql, new AgencyAgentMapper());
+
     }
 }

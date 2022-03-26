@@ -146,12 +146,12 @@ begin
     inner join agent
     where agent.agent_id not in (6, 8)
     and agency.agency_id != 2;
+    
+    -- data
+    insert into security_clearance values
+	(1, 'Secret'),
+    (2, 'Top Secret');
 
 end //
 -- 4. Change the statement terminator back to the original.
 delimiter ;
-
--- data
-insert into security_clearance values
-	(1, 'Secret'),
-    (2, 'Top Secret');

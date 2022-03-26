@@ -1,5 +1,6 @@
 package learn.field_agent.domain;
 
+import learn.field_agent.data.AgencyAgentRepository;
 import learn.field_agent.data.SecurityClearanceRepository;
 import learn.field_agent.models.AgencyAgent;
 import learn.field_agent.models.SecurityClearance;
@@ -12,10 +13,11 @@ import java.util.Objects;
 public class SecurityClearanceService {
 
     private final SecurityClearanceRepository repository;
+    private final AgencyAgentRepository agencyAgentRepository;
 
-
-    public SecurityClearanceService(SecurityClearanceRepository repository) {
+    public SecurityClearanceService(SecurityClearanceRepository repository, AgencyAgentRepository agencyAgentRepository) {
         this.repository = repository;
+        this.agencyAgentRepository = agencyAgentRepository;
     }
 
     public SecurityClearance findById(int securityClearanceId) {
@@ -58,6 +60,8 @@ public class SecurityClearanceService {
     }
 
     public boolean deleteById (int securityClearanceId) {
+//        Result<SecurityClearance> result = validateTypeDelete(securityClearanceId);
+
         return repository.deleteById(securityClearanceId);
     }
 
@@ -78,6 +82,22 @@ public class SecurityClearanceService {
 
         return result;
     }
+
+//    private Result<SecurityClearance> validateTypeDelete (Integer securityClearanceId) {
+//        Result<SecurityClearance> result = new Result<>();
+//        int count = 0;
+//        List<AgencyAgent> all = agencyAgentRepository.findAll();
+//        for (AgencyAgent a : all) {
+//            if (a.getSecurityClearance().getSecurityClearanceId()==securityClearanceId){
+//                count ++;
+//            }
+//        }
+//        if (count != 0){
+//            result.addMessage("This security clearance is currently in use and may not be deleted.", ResultType.INVALID);
+//            return result;
+//        }
+//        return result;
+//    }
 
 
 }

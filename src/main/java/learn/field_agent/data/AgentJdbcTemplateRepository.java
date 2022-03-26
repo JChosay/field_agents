@@ -2,6 +2,7 @@ package learn.field_agent.data;
 
 import learn.field_agent.data.mappers.AgentAgencyMapper;
 import learn.field_agent.data.mappers.AgentMapper;
+import learn.field_agent.data.mappers.AliasMapper;
 import learn.field_agent.models.Agent;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -113,4 +114,14 @@ public class AgentJdbcTemplateRepository implements AgentRepository {
         var agentAgencies = jdbcTemplate.query(sql, new AgentAgencyMapper(), agent.getAgentId());
         agent.setAgencies(agentAgencies);
     }
+
+//    private void addAlias(Agent agent) {
+//
+//        final String sql = "SELECT al.alias_id, al.name, al.persona" +
+//                "FROM alias al INNER JOIN agent a ON a.agent_id = al.agent_id" +
+//                "WHERE a.agent_id = ?;";
+//        var agentAlias = jdbcTemplate.query(sql, new AliasMapper(), agent.getAgentId());
+//        agent.setAlias(agentAlias);
+//
+//    }
 }
