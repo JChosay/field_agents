@@ -46,6 +46,7 @@ public class AliasJdbcTemplateRepository implements AliasRepository{
 
     @Override
     public List<Alias> findAll() {
+
         final String sql = "SELECT alias_id, `name`, persona, agent_id" +
                 " FROM alias;";
         return jdbcTemplate.query(sql, new AliasMapper());

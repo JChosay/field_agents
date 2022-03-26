@@ -32,24 +32,6 @@ public class AgentJdbcTemplateRepository implements AgentRepository {
     }
 
     @Override
-    @Transactional
-    public Agent findById(int agentId) {
-
-        final String sql = "select agent_id, first_name, middle_name, last_name, dob, height_in_inches "
-                + "from agent "
-                + "where agent_id = ?;";
-
-        Agent agent = jdbcTemplate.query(sql, new AgentMapper(), agentId).stream()
-                .findFirst().orElse(null);
-
-        if (agent != null) {
-            addAgencies(agent);
-        }
-
-        return agent;
-    }
-
-    @Override
     public Agent add(Agent agent) {
 
         final String sql = "insert into agent (first_name, middle_name, last_name, dob, height_in_inches) "
@@ -101,6 +83,25 @@ public class AgentJdbcTemplateRepository implements AgentRepository {
         return jdbcTemplate.update("delete from agent where agent_id = ?;", agentId) > 0;
     }
 
+    @Override
+    @Transactional
+    public Agent findById(int agentId) {
+
+        final String sql = "select agent_id, first_name, middle_name, last_name, dob, height_in_inches "
+                + "from agent "
+                + "where agent_id = ?;";
+
+        Agent agent = jdbcTemplate.query(sql, new AgentMapper(), agentId).stream()
+                .findFirst().orElse(null);
+
+        if (agent != null) {
+            addAgencies(agent);
+            addAlias(agent);
+        }
+
+        return agent;
+    }
+
     private void addAgencies(Agent agent) {
 
         final String sql = "select aa.agency_id, aa.agent_id, aa.identifier, aa.activation_date, aa.is_active, "
@@ -115,13 +116,12 @@ public class AgentJdbcTemplateRepository implements AgentRepository {
         agent.setAgencies(agentAgencies);
     }
 
-//    private void addAlias(Agent agent) {
-//
-//        final String sql = "SELECT al.alias_id, al.name, al.persona" +
-//                "FROM alias al INNER JOIN agent a ON a.agent_id = al.agent_id" +
-//                "WHERE a.agent_id = ?;";
-//        var agentAlias = jdbcTemplate.query(sql, new AliasMapper(), agent.getAgentId());
-//        agent.setAlias(agentAlias);
-//
-//    }
+    private void addAlias(Agent agent) {
+
+        final String sql = "SELECT al.alias_id, al.name, al.persona " +
+                "FROM alias al INNER JOIN agent a ON a.agent_id = al.agent_id " +
+                "WHERE a.agent_id = ?;";
+        var agentAlias = jdbcTemplate.query(sql, new AliasMapper(), agent.getAgentId());
+        agent.setAlias(agentAlias);
+    }
 }
