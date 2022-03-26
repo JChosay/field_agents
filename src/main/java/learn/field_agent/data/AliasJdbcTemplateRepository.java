@@ -31,7 +31,8 @@ public class AliasJdbcTemplateRepository implements AliasRepository{
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, alias.getName());
             ps.setString(2, alias.getPersona());
-            ps.setInt(3, alias.getAgent().getAgentId());
+            ps.setInt(3, alias.getAgentId());
+
             return ps;
         }, keyHolder);
 
@@ -41,7 +42,6 @@ public class AliasJdbcTemplateRepository implements AliasRepository{
 
         alias.setAliasId(keyHolder.getKey().intValue());
         return alias;
-
     }
 
     @Override
@@ -52,5 +52,6 @@ public class AliasJdbcTemplateRepository implements AliasRepository{
         return jdbcTemplate.query(sql, new AliasMapper());
 
     }
+
 
 }

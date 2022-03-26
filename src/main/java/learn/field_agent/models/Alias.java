@@ -5,8 +5,15 @@ public class Alias {
     private int aliasId;
     private String name;
     private String persona;
-    private Agent agent;
+    private int agentId;
 
+    public int getAgentId() {
+        return agentId;
+    }
+
+    public void setAgentId(int agentId) {
+        this.agentId = agentId;
+    }
 
     public int getAliasId() {
         return aliasId;
@@ -14,14 +21,6 @@ public class Alias {
 
     public void setAliasId(int aliasId) {
         this.aliasId = aliasId;
-    }
-
-    public Agent getAgent() {
-        return agent;
-    }
-
-    public void setAgent(Agent agent) {
-        this.agent = agent;
     }
 
     public String getName() {
@@ -39,7 +38,5 @@ public class Alias {
     public void setPersona(String persona) {
         this.persona = persona;
     }
-
-
 
 }

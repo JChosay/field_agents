@@ -1,12 +1,12 @@
 package learn.field_agent.controllers;
 
 import learn.field_agent.domain.AliasService;
+import learn.field_agent.domain.Result;
 import learn.field_agent.models.Agent;
 import learn.field_agent.models.Alias;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,4 +25,14 @@ public class AliasController {
     public List<Alias> findAll() {
         return service.findAll();
     }
+
+    @PostMapping
+    public ResponseEntity<Object> add (@RequestBody Alias alias){
+        Result<Alias> result = service.add(alias);
+        if (result.isSuccess()) {
+            return new ResponseEntity<>(result.getPayload(), HttpStatus.CREATED);
+        }
+        return ErrorResponse.build(result);
+    }
+
 }
