@@ -90,9 +90,6 @@ public class SecurityClearanceService {
         }
 
         return repository.deleteById(securityClearanceId);
-
     }
-
-
 
 }
