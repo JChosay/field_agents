@@ -11,4 +11,5 @@ public interface AgencyAgentRepository {
 
     boolean deleteByKey(int agencyId, int agentId);
 
+    List<AgencyAgent> findAll();
 }

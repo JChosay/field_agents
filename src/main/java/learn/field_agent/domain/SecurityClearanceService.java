@@ -2,8 +2,8 @@ package learn.field_agent.domain;
 
 import learn.field_agent.data.AgencyAgentRepository;
 import learn.field_agent.data.SecurityClearanceRepository;
-import learn.field_agent.models.AgencyAgent;
 import learn.field_agent.models.SecurityClearance;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,10 +14,12 @@ public class SecurityClearanceService {
 
     private final SecurityClearanceRepository repository;
     private final AgencyAgentRepository agencyAgentRepository;
+    private final JdbcTemplate jdbcTemplate;
 
-    public SecurityClearanceService(SecurityClearanceRepository repository, AgencyAgentRepository agencyAgentRepository) {
+    public SecurityClearanceService(SecurityClearanceRepository repository, AgencyAgentRepository agencyAgentRepository, JdbcTemplate jdbcTemplate) {
         this.repository = repository;
         this.agencyAgentRepository = agencyAgentRepository;
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     public SecurityClearance findById(int securityClearanceId) {
@@ -78,7 +80,19 @@ public class SecurityClearanceService {
     }
 
     public boolean deleteById (int securityClearanceId) {
+
+        int count = jdbcTemplate.queryForObject("select count(*) from" +
+                " agency_agent where security_clearance_id = ?;",
+                Integer.class, securityClearanceId);
+
+        if (count !=0){
+            return false;
+        }
+
         return repository.deleteById(securityClearanceId);
+
     }
+
+
 
 }

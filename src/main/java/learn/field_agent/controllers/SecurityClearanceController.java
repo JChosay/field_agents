@@ -59,6 +59,7 @@ public class SecurityClearanceController {
 
     @DeleteMapping("/{securityClearanceId}")
     public ResponseEntity<Void> deleteById(@PathVariable int securityClearanceId) {
+
         if (service.deleteById(securityClearanceId)) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
