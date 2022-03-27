@@ -49,7 +49,6 @@ class AgencyJdbcTemplateRepositoryTest {
 
     @Test
     void shouldUpdateAgency() {
-
         Agency agency = new Agency();
         agency.setAgencyId(3);
         agency.setShortName("TEST");

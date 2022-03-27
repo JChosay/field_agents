@@ -59,12 +59,6 @@ public class SecurityClearanceService {
         return result;
     }
 
-    public boolean deleteById (int securityClearanceId) {
-//        Result<SecurityClearance> result = validateTypeDelete(securityClearanceId);
-
-        return repository.deleteById(securityClearanceId);
-    }
-
     private Result<SecurityClearance> validate (SecurityClearance securityClearance) {
         Result<SecurityClearance> result = new Result<>();
 
@@ -83,21 +77,8 @@ public class SecurityClearanceService {
         return result;
     }
 
-//    private Result<SecurityClearance> validateTypeDelete (Integer securityClearanceId) {
-//        Result<SecurityClearance> result = new Result<>();
-//        int count = 0;
-//        List<AgencyAgent> all = agencyAgentRepository.findAll();
-//        for (AgencyAgent a : all) {
-//            if (a.getSecurityClearance().getSecurityClearanceId()==securityClearanceId){
-//                count ++;
-//            }
-//        }
-//        if (count != 0){
-//            result.addMessage("This security clearance is currently in use and may not be deleted.", ResultType.INVALID);
-//            return result;
-//        }
-//        return result;
-//    }
-
+    public boolean deleteById (int securityClearanceId) {
+        return repository.deleteById(securityClearanceId);
+    }
 
 }

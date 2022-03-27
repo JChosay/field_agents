@@ -43,13 +43,18 @@ public class SecurityClearanceServiceTest {
     @Test
     void shouldUpdateClearance () {
         SecurityClearance securityClearance = new SecurityClearance(3, "Update");
-
         when(repository.update(securityClearance)).thenReturn(true);
         Result<SecurityClearance> actual = service.update(securityClearance);
         assertEquals(ResultType.SUCCESS, actual.getType());
     }
 
-
+    @Test
+    void shouldNotUpdateNonexistent () {
+        SecurityClearance securityClearance = new SecurityClearance(100, "Update");
+        when(repository.update(securityClearance)).thenReturn(true);
+        Result<SecurityClearance> actual = service.update(securityClearance);
+        assertEquals(ResultType.SUCCESS, actual.getType());
+    }
 
     SecurityClearance makeClearance () {
         SecurityClearance clearance = new SecurityClearance();

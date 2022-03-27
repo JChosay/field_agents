@@ -65,5 +65,4 @@ public class SecurityClearanceController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-
 }
