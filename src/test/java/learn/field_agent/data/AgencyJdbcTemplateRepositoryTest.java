@@ -32,7 +32,7 @@ class AgencyJdbcTemplateRepositoryTest {
     }
 
     @Test
-    void shouldFindAcme() {
+    void  shouldFindAcme() {
         Agency acme = repository.findById(1);
         assertEquals("ACME", acme.getShortName());
     }
@@ -49,7 +49,6 @@ class AgencyJdbcTemplateRepositoryTest {
 
     @Test
     void shouldUpdateAgency() {
-
         Agency agency = new Agency();
         agency.setAgencyId(3);
         agency.setShortName("TEST");
